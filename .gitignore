@@ -4,5 +4,9 @@ obj/
 .vscode/
 *.user
 .DS_Store
+*.swp
 appsettings.Development.json
 .env
+node_modules/
+EmployeeApi.Tests/bin/
+EmployeeApi.Tests/obj/
