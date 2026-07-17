@@ -11,12 +11,17 @@ namespace EmployeeApi.Tests.Features.Employees.Commands
         [Fact]
         public async Task Handle_DeletesEmployee_Successfully()
         {
+            // Arrange
             var context = CreateInMemoryContext();
             var emp = new Employee { FirstName = "John", LastName = "Doe", Email = "john@example.com", Department = "IT", Salary = 50000, DateOfJoining = DateTime.Now };
             context.Employees.Add(emp);
             await context.SaveChangesAsync();
             var handler = new DeleteEmployeeCommandHandler(context);
+
+            // Act
             var result = await handler.Handle(new DeleteEmployeeCommand(emp.Id), CancellationToken.None);
+
+            // Assert
             Assert.True(result);
         }
     }

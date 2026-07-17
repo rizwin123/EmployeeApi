@@ -10,10 +10,15 @@ namespace EmployeeApi.Tests.Features.Employees.Commands
         [Fact]
         public async Task Handle_CreatesEmployee_Successfully()
         {
+            // Arrange
             var context = CreateInMemoryContext();
             var handler = new CreateEmployeeCommandHandler(context);
             var cmd = new CreateEmployeeCommand { FirstName = "John", LastName = "Doe", Email = "john@example.com", Department = "IT", Salary = 50000, DateOfJoining = DateTime.Now };
+
+            // Act
             var result = await handler.Handle(cmd, CancellationToken.None);
+
+            // Assert
             Assert.NotNull(result);
             Assert.True(result.Id > 0);
         }

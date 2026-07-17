@@ -15,20 +15,30 @@ namespace EmployeeApi.Tests.Features.Employees.Queries
         [Fact]
         public async Task Handle_ReturnsAllEmployees()
         {
+            // Arrange
             var context = CreateInMemoryContext();
             context.Employees.AddRange(new Employee { FirstName = "John", LastName = "Doe", Email = "john@example.com", Department = "IT", Salary = 50000, DateOfJoining = DateTime.Now }, new Employee { FirstName = "Jane", LastName = "Smith", Email = "jane@example.com", Department = "HR", Salary = 60000, DateOfJoining = DateTime.Now });
             await context.SaveChangesAsync();
             var handler = new GetAllEmployeesQueryHandler(context);
+
+            // Act
             var result = await handler.Handle(new GetAllEmployeesQuery(), CancellationToken.None);
+
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Count);
         }
         [Fact]
         public async Task Handle_ReturnsEmptyList_WhenNoEmployees()
         {
+            // Arrange
             var context = CreateInMemoryContext();
             var handler = new GetAllEmployeesQueryHandler(context);
+
+            // Act
             var result = await handler.Handle(new GetAllEmployeesQuery(), CancellationToken.None);
+
+            // Assert
             Assert.Empty(result);
         }
     }

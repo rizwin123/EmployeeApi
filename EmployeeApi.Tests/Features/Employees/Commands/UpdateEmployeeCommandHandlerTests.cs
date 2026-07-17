@@ -11,13 +11,18 @@ namespace EmployeeApi.Tests.Features.Employees.Commands
         [Fact]
         public async Task Handle_UpdatesEmployee_Successfully()
         {
+            // Arrange
             var context = CreateInMemoryContext();
             var emp = new Employee { FirstName = "John", LastName = "Doe", Email = "john@example.com", Department = "IT", Salary = 50000, DateOfJoining = DateTime.Now };
             context.Employees.Add(emp);
             await context.SaveChangesAsync();
             var handler = new UpdateEmployeeCommandHandler(context);
             var cmd = new UpdateEmployeeCommand { Id = emp.Id, FirstName = "Jane", LastName = "Smith", Email = "jane@example.com", Department = "HR", Salary = 60000, DateOfJoining = DateTime.Now };
+
+            // Act
             var result = await handler.Handle(cmd, CancellationToken.None);
+
+            // Assert
             Assert.NotNull(result);
             Assert.Equal("Jane", result.FirstName);
         }
